@@ -27,7 +27,11 @@ const Router = () => {
           component={SignUpPage}
           options={{title: 'Register', headerBackTitle: 'Main'}}
         />
-        <Stack.Screen name="Main" component={MainPage} />
+        <Stack.Screen
+          name="Main"
+          component={MainPage}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

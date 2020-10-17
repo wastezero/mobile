@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 
 const MainPage = () => {
   return (
-    <Tab.Navigator initialRouteName="Map">
+    <Tab.Navigator initialRouteName="Menu">
       <Tab.Screen
         name="Menu"
         component={MenuPage}

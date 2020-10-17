@@ -1,46 +1,42 @@
-import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import AppTitle from '../../components/AppTitle';
+import React from 'react';
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  ScrollView,
+  View,
+} from 'react-native';
+import {Block, Icon, Text} from 'galio-framework';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import FoodCard from '../../components/FoodCard';
+import {foods} from './mock';
 
-const MenuPage = ({navigation}) => {
-  const onButtonClick = useCallback(
-    (pageName) => () => {
-      navigation.navigate(pageName);
-    },
-    [navigation],
-  );
-
+const MenuPage = () => {
   return (
     <View style={styles.container}>
-      <AppTitle />
-      <TouchableOpacity style={styles.button} onPress={onButtonClick('Login')}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onButtonClick('SignUp')}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
+      <SafeAreaView>
+        <TouchableWithoutFeedback>
+          <Block row>
+            <Icon family="Ionicons" name="filter-list" size={25} />
+            <Text p style={{marginLeft: 10}}>
+              Filters
+            </Text>
+          </Block>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+      <ScrollView>
+        {foods.map((props, index) => (
+          <FoodCard key={index} {...props} />
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: '#32495b',
-    borderRadius: 10,
-    marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: 150,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    flex: 1,
   },
 });
 
