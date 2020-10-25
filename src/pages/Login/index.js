@@ -8,9 +8,13 @@ import {
 } from 'react-native';
 import Input from '../../components/Input';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+
+  const onLoginClick = () => {
+    navigation.navigate('Main');
+  };
 
   return (
     <View style={styles.container}>
@@ -28,7 +32,7 @@ const LoginPage = () => {
           isSecure
         />
       </KeyboardAvoidingView>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onLoginClick}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>

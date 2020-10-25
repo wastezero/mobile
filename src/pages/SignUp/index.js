@@ -8,13 +8,17 @@ import {
 } from 'react-native';
 import Input from '../../components/Input';
 
-const SignUpPage = () => {
+const SignUpPage = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [repeatedPass, setRepeatedPass] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
+
+  const onLoginClick = () => {
+    navigation.navigate('Main');
+  };
 
   return (
     <View style={styles.container}>
@@ -49,7 +53,7 @@ const SignUpPage = () => {
           autoCapitalize="none"
         />
       </KeyboardAvoidingView>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={onLoginClick}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
     </View>

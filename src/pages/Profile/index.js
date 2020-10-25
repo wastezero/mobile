@@ -1,46 +1,49 @@
 import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import AppTitle from '../../components/AppTitle';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import {Button} from 'galio-framework';
 
-const ProfilePage = ({navigation}) => {
-  const onButtonClick = useCallback(
-    (pageName) => () => {
-      navigation.navigate(pageName);
-    },
-    [navigation],
-  );
-
+const ProfilePage = () => {
   return (
     <View style={styles.container}>
-      <AppTitle />
-      <TouchableOpacity style={styles.button} onPress={onButtonClick('Login')}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onButtonClick('SignUp')}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
+      <SafeAreaView>
+        <Text style={styles.name}>Nursultan Akhmetzhanov</Text>
+      </SafeAreaView>
+      <Button color="transparent" shadowless style={styles.button}>
+        <Text>My orders</Text>
+      </Button>
+      <Button color="transparent" shadowless style={styles.button}>
+        <Text>Edit profile</Text>
+      </Button>
+      <Button color="transparent" shadowless style={styles.button}>
+        <Text>Log Out</Text>
+      </Button>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     height: '100%',
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  name: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 20,
   },
   button: {
-    borderWidth: 1,
-    borderColor: '#32495b',
-    borderRadius: 10,
+    width: '100%',
+    margin: 0,
     marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: 150,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 20,
+    borderWidth: 1,
   },
 });
 
