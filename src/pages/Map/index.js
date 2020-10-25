@@ -1,46 +1,57 @@
-import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import AppTitle from '../../components/AppTitle';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
+import {restaurants} from './mock';
 
-const MapPage = ({navigation}) => {
-  const onButtonClick = useCallback(
-    (pageName) => () => {
-      navigation.navigate(pageName);
-    },
-    [navigation],
-  );
+const MapPage = () => {
+  const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition((pos) => {
+      setUserLocation({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      });
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
-      <AppTitle />
-      <TouchableOpacity style={styles.button} onPress={onButtonClick('Login')}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onButtonClick('SignUp')}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
+      <MapView
+        style={styles.map}
+        zoomControlEnabled
+        region={{
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}>
+        <Marker coordinate={userLocation}>
+          <Image
+            source={require('../../assets/UserLocation.png')}
+            style={styles.userMarker}
+          />
+        </Marker>
+        {restaurants.map((res, index) => (
+          <Marker coordinate={res.coords} key={index} title={res.name} />
+        ))}
+      </MapView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
     height: '100%',
   },
-  button: {
-    borderWidth: 1,
-    borderColor: '#32495b',
-    borderRadius: 10,
-    marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: 150,
-    alignItems: 'center',
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
-  buttonText: {
-    fontSize: 20,
+  userMarker: {
+    width: 50,
+    height: 50,
   },
 });
 
