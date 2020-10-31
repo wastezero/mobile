@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Input from '../../components/Input';
+import {SignIn} from '../../api';
 
 const LoginPage = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  const onLoginClick = () => {
-    navigation.navigate('Main');
+  const onLoginClick = async () => {
+    await SignIn(phone, password);
   };
 
   return (

@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import {Block, Button, Icon, Input, Text} from 'galio-framework';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -13,7 +14,7 @@ import Modal from 'react-native-modal';
 import FoodCard from '../../components/FoodCard';
 import {foods} from './mock';
 
-const MenuPage = () => {
+const MenuPage = ({navigation}) => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -45,7 +46,11 @@ const MenuPage = () => {
       </SafeAreaView>
       <ScrollView>
         {foods.map((props, index) => (
-          <FoodCard key={index} {...props} />
+          <TouchableOpacity
+            key={index}
+            onPress={() => navigation.navigate('Order', {id: index})}>
+            <FoodCard {...props} />
+          </TouchableOpacity>
         ))}
       </ScrollView>
       <Modal

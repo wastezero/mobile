@@ -1,14 +1,15 @@
-import React, {useCallback} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import {Button} from 'galio-framework';
 
-const ProfilePage = () => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const ProfilePage = ({navigation}) => {
+  const logOut = async () => {
+    await AsyncStorage.removeItem('token');
+    navigation.navigate('Initial');
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -20,7 +21,11 @@ const ProfilePage = () => {
       <Button color="transparent" shadowless style={styles.button}>
         <Text>Edit profile</Text>
       </Button>
-      <Button color="transparent" shadowless style={styles.button}>
+      <Button
+        color="transparent"
+        shadowless
+        style={styles.button}
+        onPress={logOut}>
         <Text>Log Out</Text>
       </Button>
     </View>
