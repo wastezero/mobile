@@ -1,19 +1,33 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import {Button} from 'galio-framework';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GetUserInfo} from '../../api';
 
 const ProfilePage = ({navigation}) => {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+
   const logOut = async () => {
     await AsyncStorage.removeItem('token');
     navigation.navigate('Initial');
   };
 
+  useEffect(() => {
+    const getInfo = async () => {
+      const info = await GetUserInfo();
+      setName(info.name);
+      setEmail(info.email);
+    };
+    getInfo();
+  }, []);
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.name}>Nursultan Akhmetzhanov</Text>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.email}>{email}</Text>
       </SafeAreaView>
       <Button color="transparent" shadowless style={styles.button}>
         <Text>My orders</Text>
@@ -42,7 +56,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 20,
+    marginVertical: 10,
+  },
+  email: {
+    textAlign: 'center',
+    fontSize: 15,
+    marginBottom: 20,
   },
   button: {
     width: '100%',

@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {SERVER_URL} from './url';
+import {GetTokenFromStorage} from '../utils';
 
 export const SignIn = async (email, password) => {
   try {
@@ -58,6 +59,22 @@ export const SignUp = async (
     });
     const result = await response.json();
     await AsyncStorage.setItem('token', result.authentication_token);
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
+
+export const GetUserInfo = async () => {
+  try {
+    const token = await GetTokenFromStorage();
+    const response = await fetch(SERVER_URL + '/who_am_i', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
   } catch (e) {
     console.log(e);
     throw new Error(e.message);
