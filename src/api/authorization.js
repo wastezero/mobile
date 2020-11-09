@@ -18,11 +18,8 @@ export const SignIn = async (email, password) => {
       },
       body: JSON.stringify(bodyMessage),
     });
-    if (response.status === 401) {
-      throw new Error('Incorrect password');
-    }
     if (response.status === 422) {
-      throw new Error('User does not exist');
+      throw new Error('Incorrect email or password');
     }
     const result = await response.json();
     await AsyncStorage.setItem('token', result.authentication_token);
@@ -68,7 +65,7 @@ export const SignUp = async (
 export const GetUserInfo = async () => {
   try {
     const token = await GetTokenFromStorage();
-    const response = await fetch(SERVER_URL + '/who_am_i', {
+    const response = await fetch(SERVER_URL + '/client/profile', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

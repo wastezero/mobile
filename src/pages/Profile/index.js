@@ -7,7 +7,6 @@ import {GetUserInfo} from '../../api';
 
 const ProfilePage = ({navigation}) => {
   const [name, setName] = useState();
-  const [email, setEmail] = useState();
 
   const logOut = async () => {
     await AsyncStorage.removeItem('token');
@@ -17,8 +16,7 @@ const ProfilePage = ({navigation}) => {
   useEffect(() => {
     const getInfo = async () => {
       const info = await GetUserInfo();
-      setName(info.name);
-      setEmail(info.email);
+      setName(`${info.name} ${info.surname}`);
     };
     getInfo();
   }, []);
@@ -27,7 +25,6 @@ const ProfilePage = ({navigation}) => {
     <View style={styles.container}>
       <SafeAreaView>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.email}>{email}</Text>
       </SafeAreaView>
       <Button color="transparent" shadowless style={styles.button}>
         <Text>My orders</Text>
