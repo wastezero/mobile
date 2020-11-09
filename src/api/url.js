@@ -1,2 +1,1 @@
-export const SERVER_URL =
-  'https://wastezero-backend.herokuapp.com/api/v1/client';
+export const SERVER_URL = 'https://wastezero-backend.herokuapp.com/api/v1';

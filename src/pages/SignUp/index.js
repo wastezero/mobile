@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, KeyboardAvoidingView, Text} from 'react-native';
+import {Button} from 'galio-framework';
 import Input from '../../components/Input';
+import {ValidateEmail} from '../../utils';
+import {SignUp} from '../../api';
 
 const SignUpPage = ({navigation}) => {
   const [phone, setPhone] = useState('');
@@ -15,22 +12,50 @@ const SignUpPage = ({navigation}) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
+  const [error, setError] = useState();
 
-  const onLoginClick = () => {
-    navigation.navigate('Main');
+  const onLoginClick = async () => {
+    try {
+      await SignUp(email, password, name, surname, phone, repeatedPass);
+      navigation.navigate('Main');
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
+  const isButtonActive = () => {
+    return (
+      phone.length &&
+      password.length &&
+      repeatedPass.length &&
+      name.length &&
+      surname.length &&
+      email.length &&
+      ValidateEmail(email) &&
+      repeatedPass === password
+    );
   };
 
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
         <Input placeholder="First name" value={name} onChange={setName} />
+        {name.length === 0 && (
+          <Text style={styles.errorText}>Name can not be empty</Text>
+        )}
         <Input placeholder="Last Name" value={surname} onChange={setSurname} />
+        {surname.length === 0 && (
+          <Text style={styles.errorText}>Surname can not be empty</Text>
+        )}
         <Input
           placeholder="Phone number"
           value={phone}
           onChange={setPhone}
           keyboardType="phone-pad"
         />
+        {phone.length === 0 && (
+          <Text style={styles.errorText}>Phone number can not be empty</Text>
+        )}
         <Input
           placeholder="Email"
           value={email}
@@ -38,6 +63,9 @@ const SignUpPage = ({navigation}) => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
+        {!ValidateEmail(email) && (
+          <Text style={styles.errorText}>Invalid email</Text>
+        )}
         <Input
           placeholder="Password"
           onChange={setPassword}
@@ -45,6 +73,9 @@ const SignUpPage = ({navigation}) => {
           isSecure
           autoCapitalize="none"
         />
+        {password.length === 0 && (
+          <Text style={styles.errorText}>Passwords can not be empty</Text>
+        )}
         <Input
           placeholder="Repeat password"
           value={repeatedPass}
@@ -52,10 +83,17 @@ const SignUpPage = ({navigation}) => {
           isSecure
           autoCapitalize="none"
         />
+        {repeatedPass.length > 0 && password !== repeatedPass && (
+          <Text style={styles.errorText}>Passwords are not same</Text>
+        )}
       </KeyboardAvoidingView>
-      <TouchableOpacity style={styles.button} onPress={onLoginClick}>
+      <Button
+        style={styles.button}
+        onPress={onLoginClick}
+        disabled={!isButtonActive()}>
         <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
+      </Button>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
@@ -84,5 +122,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
+  },
+  errorText: {
+    color: '#ff0000',
+    alignSelf: 'flex-start',
   },
 });

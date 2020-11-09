@@ -10,21 +10,28 @@ import Input from '../../components/Input';
 import {SignIn} from '../../api';
 
 const LoginPage = ({navigation}) => {
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState();
 
   const onLoginClick = async () => {
-    await SignIn(phone, password);
+    try {
+      await SignIn(email, password);
+      navigation.navigate('Main');
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
         <Input
-          placeholder="Phone number"
-          value={phone}
-          onChange={setPhone}
-          keyboardType="phone-pad"
+          placeholder="email"
+          value={email}
+          onChange={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
         <Input
           placeholder="Password"
@@ -33,9 +40,13 @@ const LoginPage = ({navigation}) => {
           isSecure
         />
       </KeyboardAvoidingView>
-      <TouchableOpacity style={styles.button} onPress={onLoginClick}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onLoginClick}
+        disabled={email.length === 0 || password.length === 0}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
@@ -64,5 +75,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
+  },
+  errorText: {
+    color: '#ff0000',
+    marginTop: 10,
   },
 });
