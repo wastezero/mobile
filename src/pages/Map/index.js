@@ -2,10 +2,16 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import {restaurants} from './mock';
+import {GetBranches} from '../../api';
 
-const MapPage = () => {
+const MapPage = ({navigation}) => {
   const [userLocation, setUserLocation] = useState({latitude: 0, longitude: 0});
+  const [branches, setBranches] = useState([]);
+
+  const getBranches = async () => {
+    const res = await GetBranches();
+    setBranches(res.branches);
+  };
 
   useEffect(() => {
     Geolocation.getCurrentPosition((pos) => {
@@ -14,6 +20,7 @@ const MapPage = () => {
         longitude: pos.coords.longitude,
       });
     });
+    getBranches();
   }, []);
 
   return (
@@ -33,8 +40,13 @@ const MapPage = () => {
             style={styles.userMarker}
           />
         </Marker>
-        {restaurants.map((res, index) => (
-          <Marker coordinate={res.coords} key={index} title={res.name} />
+        {branches.map((res) => (
+          <Marker
+            coordinate={{latitude: res.address.lng, longitude: res.address.lat}}
+            key={res.id}
+            title={res.restaurant.name}
+            onPress={() => navigation.navigate('Branch', {id: res.id})}
+          />
         ))}
       </MapView>
     </View>

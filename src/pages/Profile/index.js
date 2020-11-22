@@ -13,13 +13,17 @@ const ProfilePage = ({navigation}) => {
     navigation.navigate('Initial');
   };
 
+  const getInfo = async () => {
+    const info = await GetUserInfo();
+    setName(`${info.name} ${info.surname}`);
+  };
+
   useEffect(() => {
-    const getInfo = async () => {
-      const info = await GetUserInfo();
-      setName(`${info.name} ${info.surname}`);
-    };
-    getInfo();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getInfo();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
