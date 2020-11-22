@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -12,11 +12,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 
 import FoodCard from '../../components/FoodCard';
-import {foods} from './mock';
+import {GetOrders} from '../../api';
 
 const MenuPage = ({navigation}) => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const [orders, setOrders] = useState([]);
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
@@ -25,6 +27,18 @@ const MenuPage = ({navigation}) => {
   const onSearch = (text) => {
     setSearchValue(text);
   };
+
+  const getOrders = async () => {
+    const res = await GetOrders();
+    setOrders(res.orders);
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getOrders();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -45,11 +59,16 @@ const MenuPage = ({navigation}) => {
         />
       </SafeAreaView>
       <ScrollView>
-        {foods.map((props, index) => (
+        {orders.map((order) => (
           <TouchableOpacity
-            key={index}
-            onPress={() => navigation.navigate('Order', {id: index})}>
-            <FoodCard {...props} />
+            key={order.id}
+            onPress={() => navigation.navigate('Order', {id: order.id})}>
+            <FoodCard
+              imageUrl={order.food.image}
+              name={order.food.name}
+              price={order.price}
+              restaurant={order.branch.restaurant.name}
+            />
           </TouchableOpacity>
         ))}
       </ScrollView>

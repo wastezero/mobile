@@ -7,9 +7,13 @@ const FoodCard = ({imageUrl, name, restaurant, price}) => {
   return (
     <Block style={styles.container} shadow shadowColor="#696969">
       <Image
-        source={{
-          uri: imageUrl,
-        }}
+        source={
+          imageUrl
+            ? {
+                uri: imageUrl,
+              }
+            : require('../../assets/noimage.jpg')
+        }
         style={styles.image}
       />
       <Block style={styles.info}>

@@ -1,30 +1,73 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 import {Button} from 'galio-framework';
-import {foods} from '../Menu/mock';
+import {GetOrder, MakeOrder} from '../../api';
+import InfoField from '../../components/InfoField';
 
 const OrderPage = ({route, navigation}) => {
-  const [selectedFood, setSelectedFood] = useState();
+  const [order, setOrder] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getFood = useCallback(
+    async (id) => {
+      const res = await GetOrder(id);
+      navigation.setOptions({title: res.orders.food.name});
+      setOrder(res.orders);
+    },
+    [navigation],
+  );
+
+  const onButtonClick = async (id) => {
+    setIsLoading(true);
+    await MakeOrder(id);
+    navigation.navigate('Main');
+  };
 
   useEffect(() => {
-    const food = foods[route.params.id];
-    navigation.setOptions({title: food.name});
-    setSelectedFood(food);
-  }, [route, navigation]);
+    const id = route.params.id;
+    getFood(id);
+  }, [getFood, route, navigation]);
 
   return (
     <View style={styles.container}>
-      {selectedFood ? (
+      {order ? (
         <>
           <Image
-            source={{
-              uri: selectedFood.imageUrl,
-            }}
+            source={
+              order.food.image
+                ? {
+                    uri: order.food.image,
+                  }
+                : require('../../assets/noimage.jpg')
+            }
             style={styles.image}
           />
           <View style={styles.content}>
-            <Button color="transparent" shadowless style={styles.button}>
-              <Text>Order</Text>
+            <Text style={styles.name}>{order.food.name}</Text>
+            <InfoField field="Price" value={order.price + '₸'} />
+            <InfoField field="Cuisine" value={order.food.cuisine} />
+            <InfoField
+              field="Restaurant"
+              value={order.branch.restaurant.name}
+            />
+            <InfoField
+              field="Address"
+              value={
+                order.branch.address.street +
+                ' ' +
+                order.branch.address.house_number
+              }
+            />
+            <Button
+              color="transparent"
+              shadowless
+              style={styles.button}
+              onPress={() => onButtonClick(order.id)}>
+              {isLoading ? (
+                <ActivityIndicator size="small" />
+              ) : (
+                <Text>Order</Text>
+              )}
             </Button>
           </View>
         </>
@@ -43,6 +86,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
+    resizeMode: 'stretch',
   },
   content: {
     paddingHorizontal: 20,
@@ -50,9 +94,9 @@ const styles = StyleSheet.create({
   },
   name: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginVertical: 20,
+    marginVertical: 10,
   },
   button: {
     width: '100%',
