@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -8,6 +8,7 @@ import SignUpPage from './SignUp';
 import MainPage from './Main';
 import OrderPage from './Order';
 import LoadingPage from './Loading';
+import MyOrdersPage from './MyOrders';
 
 const Stack = createStackNavigator();
 const Router = () => {
@@ -45,6 +46,11 @@ const Router = () => {
           options={({route}) => ({
             title: route ? route.params.title || '' : '',
           })}
+        />
+        <Stack.Screen
+          name="MyOrders"
+          component={MyOrdersPage}
+          options={{title: 'My Orders', headerBackTitle: 'Main'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

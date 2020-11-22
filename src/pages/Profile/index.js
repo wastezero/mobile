@@ -26,7 +26,11 @@ const ProfilePage = ({navigation}) => {
       <SafeAreaView>
         <Text style={styles.name}>{name}</Text>
       </SafeAreaView>
-      <Button color="transparent" shadowless style={styles.button}>
+      <Button
+        color="transparent"
+        shadowless
+        style={styles.button}
+        onPress={() => navigation.navigate('MyOrders')}>
         <Text>My orders</Text>
       </Button>
       <Button color="transparent" shadowless style={styles.button}>

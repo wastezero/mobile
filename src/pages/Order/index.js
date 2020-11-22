@@ -1,12 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 import {Button} from 'galio-framework';
-import {GetOrder, MakeOrder} from '../../api';
+import {CancelOrder, GetOrder, MakeOrder} from '../../api';
 import InfoField from '../../components/InfoField';
 
 const OrderPage = ({route, navigation}) => {
   const [order, setOrder] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [myOrder, setMyOrder] = useState(false);
 
   const getFood = useCallback(
     async (id) => {
@@ -19,12 +27,18 @@ const OrderPage = ({route, navigation}) => {
 
   const onButtonClick = async (id) => {
     setIsLoading(true);
-    await MakeOrder(id);
-    navigation.navigate('Main');
+    if (myOrder) {
+      await CancelOrder(id);
+    } else {
+      await MakeOrder(id);
+    }
+    navigation.goBack();
   };
 
   useEffect(() => {
     const id = route.params.id;
+    const isMyOrder = route.params.myOrder;
+    setMyOrder(!!isMyOrder);
     getFood(id);
   }, [getFood, route, navigation]);
 
@@ -66,7 +80,7 @@ const OrderPage = ({route, navigation}) => {
               {isLoading ? (
                 <ActivityIndicator size="small" />
               ) : (
-                <Text>Order</Text>
+                <Text>{myOrder ? 'Cancel order' : 'Order'}</Text>
               )}
             </Button>
           </View>
