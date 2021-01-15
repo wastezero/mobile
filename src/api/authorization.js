@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {SERVER_URL} from './url';
-import {GetTokenFromStorage} from '../utils';
+import { SERVER_URL } from './url';
+import { GetTokenFromStorage } from '../utils';
 
 export const SignIn = async (email, password) => {
   try {

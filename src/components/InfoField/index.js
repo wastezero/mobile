@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const InfoField = ({field, value}) => {
+export const InfoField = ({ field, value }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.field}>{field}:</Text>
@@ -27,5 +27,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-export default InfoField;

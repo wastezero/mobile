@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
-import {Block, Text} from 'galio-framework';
+import { StyleSheet, Image } from 'react-native';
+import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 
-const FoodCard = ({imageUrl, name, restaurant, price}) => {
+export const FoodCard = ({ imageUrl, name, restaurant, price }) => {
   return (
     <Block style={styles.container} shadow shadowColor="#696969">
       <Image
@@ -56,5 +56,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default FoodCard;

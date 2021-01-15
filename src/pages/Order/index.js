@@ -1,17 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
-import {Button} from 'galio-framework';
-import {CancelOrder, GetOrder, MakeOrder} from '../../api';
-import InfoField from '../../components/InfoField';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { Button } from 'galio-framework';
+import { CancelOrder, GetOrder, MakeOrder } from 'src/api';
+import { InfoField } from 'src/components';
 
-const OrderPage = ({route, navigation}) => {
+const OrderPage = ({ route, navigation }) => {
   const [order, setOrder] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [myOrder, setMyOrder] = useState(false);
@@ -19,7 +12,7 @@ const OrderPage = ({route, navigation}) => {
   const getFood = useCallback(
     async (id) => {
       const res = await GetOrder(id);
-      navigation.setOptions({title: res.orders.food.name});
+      navigation.setOptions({ title: res.orders.food.name });
       setOrder(res.orders);
     },
     [navigation],
@@ -86,7 +79,7 @@ const OrderPage = ({route, navigation}) => {
           </View>
         </>
       ) : (
-        <ActivityIndicator size="large" style={{marginTop: 20}} />
+        <ActivityIndicator size="large" style={{ marginTop: 20 }} />
       )}
     </View>
   );

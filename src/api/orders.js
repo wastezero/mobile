@@ -1,5 +1,5 @@
-import {SERVER_URL} from './url';
-import {GetTokenFromStorage} from '../utils';
+import { SERVER_URL } from './url';
+import { GetTokenFromStorage } from '../utils';
 
 const OrderUrl = '/client/orders';
 const MyOrderUrl = '/client/my_orders';

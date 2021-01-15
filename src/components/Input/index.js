@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, TextInput, Dimensions} from 'react-native';
+import { StyleSheet, TextInput, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 
-const Input = ({onChange, isSecure, ...rest}) => (
+export const Input = ({ onChange, isSecure, ...rest }) => (
   <TextInput
     style={styles.input}
     onChangeText={onChange}
@@ -24,8 +24,6 @@ Input.propTypes = {
 Input.defaultProps = {
   keyboardType: 'default',
 };
-
-export default Input;
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 

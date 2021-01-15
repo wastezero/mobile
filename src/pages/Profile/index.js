@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import {Button} from 'galio-framework';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { Button } from 'galio-framework';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {GetUserInfo} from '../../api';
+import { GetUserInfo } from 'src/api';
 
-const ProfilePage = ({navigation}) => {
+const ProfilePage = ({ navigation }) => {
   const [name, setName] = useState();
 
   const logOut = async () => {

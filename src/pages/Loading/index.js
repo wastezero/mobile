@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View, ActivityIndicator} from 'react-native';
-import {GetTokenFromStorage} from '../../utils';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { GetTokenFromStorage } from 'src/utils';
 
-const LoadingPage = ({navigation}) => {
+const LoadingPage = ({ navigation }) => {
   useEffect(() => {
     const checkToken = async () => {
       const token = await GetTokenFromStorage();

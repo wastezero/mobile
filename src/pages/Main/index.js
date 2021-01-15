@@ -1,6 +1,6 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Button, Icon} from 'galio-framework';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Button, Icon } from 'galio-framework';
 
 import MenuPage from '../Menu';
 import MapPage from '../Map';
@@ -15,7 +15,7 @@ const MainPage = () => {
         name="Menu"
         component={MenuPage}
         options={{
-          tabBarIcon: ({size, color}) => (
+          tabBarIcon: ({ size, color }) => (
             <Icon name="menu" family="Ionicons" size={size} color={color} />
           ),
         }}
@@ -24,7 +24,7 @@ const MainPage = () => {
         name="Map"
         component={MapPage}
         options={{
-          tabBarButton: ({onPress}) => (
+          tabBarButton: ({ onPress }) => (
             <Button
               onPress={onPress}
               onlyIcon
@@ -38,7 +38,7 @@ const MainPage = () => {
         name="Profile"
         component={ProfilePage}
         options={{
-          tabBarIcon: ({size, color}) => (
+          tabBarIcon: ({ size, color }) => (
             <Icon name="user" family="evilicons" size={size} color={color} />
           ),
         }}

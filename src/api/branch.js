@@ -1,4 +1,4 @@
-import {SERVER_URL} from './url';
+import { SERVER_URL } from './url';
 
 const BranchUrl = '/client/branches';
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -8,12 +8,11 @@ import {
   View,
 } from 'react-native';
 
-import FoodCard from '../../components/FoodCard';
-import {GetBranch} from '../../api';
-import {Text} from 'galio-framework';
-import InfoField from '../../components/InfoField';
+import { FoodCard, InfoField } from 'src/components';
+import { GetBranch } from 'src/api';
+import { Text } from 'galio-framework';
 
-const BranchPage = ({navigation, route}) => {
+const BranchPage = ({ navigation, route }) => {
   const [branch, setBranch] = useState();
 
   const getBranch = async (id) => {
@@ -48,7 +47,7 @@ const BranchPage = ({navigation, route}) => {
             <Text style={styles.description}>
               {branch.restaurant.description}
             </Text>
-            <View style={{marginBottom: 20}}>
+            <View style={{ marginBottom: 20 }}>
               <InfoField field="Cuisine" value={branch.restaurant.cuisine} />
               <InfoField
                 field="Address"
@@ -60,7 +59,7 @@ const BranchPage = ({navigation, route}) => {
             {branch.orders.map((order) => (
               <TouchableOpacity
                 key={order.id}
-                onPress={() => navigation.navigate('Order', {id: order.id})}>
+                onPress={() => navigation.navigate('Order', { id: order.id })}>
                 <FoodCard
                   imageUrl={order.food.image}
                   name={order.food.name}
@@ -72,7 +71,7 @@ const BranchPage = ({navigation, route}) => {
           </View>
         </>
       ) : (
-        <ActivityIndicator size="large" style={{marginTop: 20}} />
+        <ActivityIndicator size="large" style={{ marginTop: 20 }} />
       )}
     </ScrollView>
   );

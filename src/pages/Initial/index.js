@@ -1,8 +1,8 @@
-import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import AppTitle from '../../components/AppTitle';
+import React, { useCallback } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { AppTitle } from 'src/components';
 
-const InitialScreen = ({navigation}) => {
+const InitialScreen = ({ navigation }) => {
   const onButtonClick = useCallback(
     (pageName) => () => {
       navigation.navigate(pageName);

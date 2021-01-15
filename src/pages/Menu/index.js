@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -7,14 +7,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {Block, Button, Icon, Input, Text} from 'galio-framework';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Block, Button, Icon, Input, Text } from 'galio-framework';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 
-import FoodCard from '../../components/FoodCard';
-import {GetOrders} from '../../api';
+import { FoodCard } from 'src/components';
+import { GetOrders } from 'src/api';
 
-const MenuPage = ({navigation}) => {
+const MenuPage = ({ navigation }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -46,7 +46,7 @@ const MenuPage = ({navigation}) => {
         <TouchableWithoutFeedback onPress={toggleFilters}>
           <Block row>
             <Icon family="Ionicons" name="filter-list" size={25} />
-            <Text p style={{marginLeft: 10}}>
+            <Text p style={{ marginLeft: 10 }}>
               Filters
             </Text>
           </Block>
@@ -62,7 +62,7 @@ const MenuPage = ({navigation}) => {
         {orders.map((order) => (
           <TouchableOpacity
             key={order.id}
-            onPress={() => navigation.navigate('Order', {id: order.id})}>
+            onPress={() => navigation.navigate('Order', { id: order.id })}>
             <FoodCard
               imageUrl={order.food.image}
               name={order.food.name}
@@ -81,7 +81,7 @@ const MenuPage = ({navigation}) => {
         <Block style={styles.modalContent}>
           <SafeAreaView>
             <View style={styles.inputFieldContainer}>
-              <Text p style={{marginRight: 20}}>
+              <Text p style={{ marginRight: 20 }}>
                 Price:
               </Text>
               <View style={styles.inputFieldContainer}>
@@ -100,7 +100,7 @@ const MenuPage = ({navigation}) => {
             </View>
             <Button
               color="success"
-              style={{alignSelf: 'center'}}
+              style={{ alignSelf: 'center' }}
               uppercase
               shadowless
               onPress={toggleFilters}>

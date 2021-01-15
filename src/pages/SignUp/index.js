@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, KeyboardAvoidingView, Text} from 'react-native';
-import {Button} from 'galio-framework';
-import Input from '../../components/Input';
-import {ValidateEmail} from '../../utils';
-import {SignUp} from '../../api';
+import React, { useState } from 'react';
+import { StyleSheet, View, KeyboardAvoidingView, Text } from 'react-native';
+import { Button } from 'galio-framework';
+import { Input } from 'src/components';
+import { ValidateEmail } from 'src/utils';
+import { SignUp } from 'src/api';
 
-const SignUpPage = ({navigation}) => {
+const SignUpPage = ({ navigation }) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [repeatedPass, setRepeatedPass] = useState('');

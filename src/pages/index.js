@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import InitialScreen from './Initial';
 import LoginPage from './Login';
@@ -19,44 +19,44 @@ const Router = () => {
         <Stack.Screen
           name="Loading"
           component={LoadingPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Initial"
           component={InitialScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Login"
           component={LoginPage}
-          options={{title: 'Login', headerBackTitle: 'Main'}}
+          options={{ title: 'Login', headerBackTitle: 'Main' }}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUpPage}
-          options={{title: 'Register', headerBackTitle: 'Main'}}
+          options={{ title: 'Register', headerBackTitle: 'Main' }}
         />
         <Stack.Screen
           name="Main"
           component={MainPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Order"
           component={OrderPage}
-          options={({route}) => ({
+          options={({ route }) => ({
             title: route ? route.params.title || '' : '',
           })}
         />
         <Stack.Screen
           name="MyOrders"
           component={MyOrdersPage}
-          options={{title: 'My Orders', headerBackTitle: 'Profile'}}
+          options={{ title: 'My Orders', headerBackTitle: 'Profile' }}
         />
         <Stack.Screen
           name="Branch"
           component={BranchPage}
-          options={{title: ''}}
+          options={{ title: '' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

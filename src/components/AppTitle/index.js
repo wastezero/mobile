@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-const AppTitle = () => {
+export const AppTitle = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.topText}>WasteZero</Text>
@@ -26,5 +26,3 @@ const styles = StyleSheet.create({
     color: '#32495b',
   },
 });
-
-export default AppTitle;

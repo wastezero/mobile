@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, ScrollView, View, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
 
-import FoodCard from '../../components/FoodCard';
-import {GetMyOrders} from '../../api';
+import { FoodCard } from 'src/components';
+import { GetMyOrders } from 'src/api';
 
-const MyOrdersPage = ({navigation}) => {
+const MyOrdersPage = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
@@ -26,7 +26,7 @@ const MyOrdersPage = ({navigation}) => {
           <TouchableOpacity
             key={order.id}
             onPress={() =>
-              navigation.navigate('Order', {id: order.id, myOrder: true})
+              navigation.navigate('Order', { id: order.id, myOrder: true })
             }>
             <FoodCard
               imageUrl={order.food.image}

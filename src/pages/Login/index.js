@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,10 +6,10 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import Input from '../../components/Input';
-import {SignIn} from '../../api';
+import { Input } from 'src/components';
+import { SignIn } from 'src/api';
 
-const LoginPage = ({navigation}) => {
+const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState();
