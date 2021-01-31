@@ -7,21 +7,33 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { Block, Button, Icon, Input, Text } from 'galio-framework';
+import { Block, Button, Icon, Input, Text, Switch } from 'galio-framework';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 
 import { FoodCard } from 'src/components';
-import { GetOrders } from 'src/api';
+import { GetOrders, GetOrdersByFilters } from 'src/api';
+import Geolocation from '@react-native-community/geolocation';
 
 const MenuPage = ({ navigation }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [isNearby, setIsNearby] = useState(false);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [userLocation, setUserLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
   const [orders, setOrders] = useState([]);
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
+  };
+
+  const toggleNearby = () => {
+    setIsNearby(!isNearby);
   };
 
   const onSearch = (text) => {
@@ -32,6 +44,26 @@ const MenuPage = ({ navigation }) => {
     const res = await GetOrders();
     setOrders(res.orders);
   };
+
+  const onFiltersApply = async () => {
+    console.log('nearby', isNearby);
+    const res = await GetOrdersByFilters({
+      minPrice: Number(minPrice),
+      maxPrice: Number(maxPrice),
+      userLocation: isNearby ? userLocation : undefined,
+    });
+    toggleFilters();
+    setOrders(res.orders);
+  };
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition((pos) => {
+      setUserLocation({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      });
+    });
+  });
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -86,6 +118,8 @@ const MenuPage = ({ navigation }) => {
               </Text>
               <View style={styles.inputFieldContainer}>
                 <TextInput
+                  value={minPrice}
+                  onChangeText={setMinPrice}
                   placeholder="from"
                   type="numeric"
                   style={styles.inputPrice}
@@ -93,17 +127,25 @@ const MenuPage = ({ navigation }) => {
                 <Text>-</Text>
                 <TextInput
                   placeholder="to"
+                  value={maxPrice}
+                  onChangeText={setMaxPrice}
                   type="numeric"
                   style={styles.inputPrice}
                 />
               </View>
             </View>
+            <View style={styles.inputFieldContainer}>
+              <Text p style={{ marginRight: 20 }}>
+                Nearby:
+              </Text>
+              <Switch value={isNearby} onChange={toggleNearby} />
+            </View>
             <Button
-              color="success"
+              color="primary"
               style={{ alignSelf: 'center' }}
               uppercase
               shadowless
-              onPress={toggleFilters}>
+              onPress={onFiltersApply}>
               Apply Filters
             </Button>
           </SafeAreaView>
