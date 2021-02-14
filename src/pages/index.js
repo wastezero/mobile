@@ -10,6 +10,7 @@ import OrderPage from './Order';
 import LoadingPage from './Loading';
 import MyOrdersPage from './MyOrders';
 import BranchPage from './BranchPage';
+import CreatePage from './CreateOrder';
 
 const Stack = createStackNavigator();
 const Router = () => {
@@ -57,6 +58,11 @@ const Router = () => {
           name="Branch"
           component={BranchPage}
           options={{ title: '' }}
+        />
+        <Stack.Screen
+          name="Create"
+          component={CreatePage}
+          options={{ title: 'Create Order', headerBackTitle: '' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

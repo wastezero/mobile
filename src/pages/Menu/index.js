@@ -46,7 +46,6 @@ const MenuPage = ({ navigation }) => {
   };
 
   const onFiltersApply = async () => {
-    console.log('nearby', isNearby);
     const res = await GetOrdersByFilters({
       minPrice: Number(minPrice),
       maxPrice: Number(maxPrice),
@@ -75,14 +74,25 @@ const MenuPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <TouchableWithoutFeedback onPress={toggleFilters}>
-          <Block row>
-            <Icon family="Ionicons" name="filter-list" size={25} />
-            <Text p style={{ marginLeft: 10 }}>
-              Filters
-            </Text>
-          </Block>
-        </TouchableWithoutFeedback>
+        <View style={styles.topContainer}>
+          <TouchableWithoutFeedback onPress={toggleFilters}>
+            <Block row>
+              <Icon family="Ionicons" name="filter-list" size={25} />
+              <Text p style={{ marginLeft: 10 }}>
+                Filters
+              </Text>
+            </Block>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('Create')}>
+            <Block row>
+              <Text p style={styles.createOrder}>
+                Create Order
+              </Text>
+              <Icon family="Ionicons" name="add" color="orange" size={25} />
+            </Block>
+          </TouchableWithoutFeedback>
+        </View>
         <Input
           placeholder="Search"
           value={searchValue}
@@ -183,6 +193,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginVertical: 10,
+  },
+  topContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  createOrder: {
+    color: 'orange',
   },
 });
 

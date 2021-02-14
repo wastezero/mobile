@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   input: {
     width: DEVICE_WIDTH - 40,
     height: 40,
-    marginVertical: 5,
+    marginVertical: 3,
     borderBottomWidth: 1,
     borderColor: '#32495b',
     color: '#000',
