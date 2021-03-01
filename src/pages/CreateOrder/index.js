@@ -1,26 +1,52 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, Image, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { Input } from 'src/components';
 import { Button, Text } from 'galio-framework';
+import { CreateOrder } from 'src/api';
 
 const CreatePage = ({ navigation, route }) => {
   const [image, setImage] = useState();
+  const [name, setName] = useState('');
+  const [cuisine, setCuisine] = useState('');
+  const [price, setPrice] = useState(0);
+
+  const onSubmit = async () => {
+    try {
+      await CreateOrder({ name, price, cuisine });
+      navigation.goBack();
+    } catch (e) {
+      Alert(e.message);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.inputContainer}>
         <Text style={styles.labelText}>Food Name</Text>
-        <Input placeholder="Food Name" />
+        <Input
+          placeholder="Food Name"
+          value={name}
+          onChange={(text) => setName(text)}
+        />
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.labelText}>Price</Text>
-        <Input placeholder="Price" keyboardType="numeric" />
+        <Input
+          placeholder="Price"
+          keyboardType="numeric"
+          value={price.toString()}
+          onChange={(text) => setPrice(Number(text))}
+        />
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.labelText}>Cuisine</Text>
-        <Input placeholder="Cuisine" />
+        <Input
+          placeholder="Cuisine"
+          value={cuisine}
+          onChange={(text) => setCuisine(text)}
+        />
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.labelText}>Pick up address</Text>
@@ -41,7 +67,7 @@ const CreatePage = ({ navigation, route }) => {
         }}>
         <Text>{image ? 'Change Image' : 'Add Image'}</Text>
       </Button>
-      <Button color="success">
+      <Button color="success" onPress={onSubmit}>
         <Text>Post Food</Text>
       </Button>
     </ScrollView>

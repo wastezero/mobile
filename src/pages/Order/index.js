@@ -53,18 +53,22 @@ const OrderPage = ({ route, navigation }) => {
             <Text style={styles.name}>{order.food.name}</Text>
             <InfoField field="Price" value={order.price + '₸'} />
             <InfoField field="Cuisine" value={order.food.cuisine} />
-            <InfoField
-              field="Restaurant"
-              value={order.branch.restaurant.name}
-            />
-            <InfoField
-              field="Address"
-              value={
-                order.branch.address.street +
-                ' ' +
-                order.branch.address.house_number
-              }
-            />
+            {order.branch && (
+              <>
+                <InfoField
+                  field="Restaurant"
+                  value={order.branch.restaurant.name}
+                />
+                <InfoField
+                  field="Address"
+                  value={
+                    order.branch.address.street +
+                    ' ' +
+                    order.branch.address.house_number
+                  }
+                />
+              </>
+            )}
             <Button
               color="transparent"
               shadowless

@@ -88,3 +88,27 @@ export const CancelOrder = async (id) => {
     console.log(e);
   }
 };
+
+export const CreateOrder = async ({ name, price, cuisine }) => {
+  try {
+    const token = await GetTokenFromStorage();
+    const response = await fetch(`${SERVER_URL}${OrderUrl}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        order: {
+          expires_at: '2030-10-01T23:00:00.000Z',
+          name,
+          discount_price: price,
+          cuisine,
+        },
+      }),
+    });
+    return await response.json();
+  } catch (e) {
+    throw new Error('error');
+  }
+};

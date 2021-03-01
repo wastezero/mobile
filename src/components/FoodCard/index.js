@@ -18,9 +18,11 @@ export const FoodCard = ({ imageUrl, name, restaurant, price }) => {
       />
       <Block style={styles.info}>
         <Text h5>{name}</Text>
-        <Text p size={17} color="#696969">
-          {restaurant}
-        </Text>
+        {restaurant && (
+          <Text p size={17} color="#696969">
+            {restaurant}
+          </Text>
+        )}
       </Block>
       <Text h4>{price} ₸</Text>
     </Block>

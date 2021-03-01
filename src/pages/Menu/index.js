@@ -109,7 +109,7 @@ const MenuPage = ({ navigation }) => {
               imageUrl={order.food.image}
               name={order.food.name}
               price={order.price}
-              restaurant={order.branch.restaurant.name}
+              restaurant={order.branch && order.branch.restaurant.name}
             />
           </TouchableOpacity>
         ))}
