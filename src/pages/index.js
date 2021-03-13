@@ -11,6 +11,8 @@ import LoadingPage from './Loading';
 import MyOrdersPage from './MyOrders';
 import BranchPage from './BranchPage';
 import CreatePage from './CreateOrder';
+import ChatsPage from './Chats';
+import ChatPage from './Chat';
 
 const Stack = createStackNavigator();
 const Router = () => {
@@ -53,6 +55,18 @@ const Router = () => {
           name="MyOrders"
           component={MyOrdersPage}
           options={{ title: 'My Orders', headerBackTitle: 'Profile' }}
+        />
+        <Stack.Screen
+          name="Chats"
+          component={ChatsPage}
+          options={{ title: 'Chats', headerBackTitle: 'Profile' }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={ChatPage}
+          options={({ route }) => ({
+            title: route && route.params ? route.params.title || '' : '',
+          })}
         />
         <Stack.Screen
           name="Branch"

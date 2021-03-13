@@ -24,7 +24,7 @@ export const FoodCard = ({ imageUrl, name, restaurant, price }) => {
           </Text>
         )}
       </Block>
-      <Text h4>{price} ₸</Text>
+      {price && <Text h4>{price} ₸</Text>}
     </Block>
   );
 };

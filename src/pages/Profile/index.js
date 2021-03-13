@@ -37,6 +37,13 @@ const ProfilePage = ({ navigation }) => {
         onPress={() => navigation.navigate('MyOrders')}>
         <Text>My orders</Text>
       </Button>
+      <Button
+        color="transparent"
+        shadowless
+        style={styles.button}
+        onPress={() => navigation.navigate('Chats')}>
+        <Text>Chat</Text>
+      </Button>
       <Button color="transparent" shadowless style={styles.button}>
         <Text>Edit profile</Text>
       </Button>
