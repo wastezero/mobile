@@ -9,21 +9,21 @@ const ChatPage = ({ navigation }) => {
       [
         {
           _id: 1,
-          text: 'Hello developer',
+          text: 'Hello!',
           createdAt: new Date(),
           user: {
             _id: 2,
-            name: 'React Native',
+            name: 'Free flow',
             avatar: 'https://placeimg.com/140/140/any',
           },
         },
         {
           _id: 2,
-          text: 'How are you',
+          text: 'What would you like to order?',
           createdAt: new Date(),
           user: {
             _id: 2,
-            name: 'React Native',
+            name: 'Free flow',
             avatar: 'https://placeimg.com/140/140/any',
           },
         },

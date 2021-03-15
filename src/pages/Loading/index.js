@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import { GetTokenFromStorage } from 'src/utils';
+import { GetUserInfo } from '../../api';
 
 const LoadingPage = ({ navigation }) => {
   useEffect(() => {
     const checkToken = async () => {
-      const token = await GetTokenFromStorage();
-      if (token) {
-        navigation.navigate('Main');
-      } else {
+      try {
+        const res = await GetUserInfo();
+        if (res.authentication_token) {
+          navigation.navigate('Main');
+        } else {
+          navigation.navigate('Initial');
+        }
+      } catch (e) {
         navigation.navigate('Initial');
       }
     };
