@@ -7,7 +7,7 @@ const LoadingPage = ({ navigation }) => {
     const checkToken = async () => {
       try {
         const res = await GetUserInfo();
-        if (res.authentication_token) {
+        if (res.id) {
           navigation.navigate('Main');
         } else {
           navigation.navigate('Initial');

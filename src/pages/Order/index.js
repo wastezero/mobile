@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { Button } from 'galio-framework';
-import { CancelOrder, GetOrder, MakeOrder } from 'src/api';
+import { CancelOrder, CreateChat, GetOrder, MakeOrder } from 'src/api';
 import { InfoField } from 'src/components';
 
 const OrderPage = ({ route, navigation }) => {
@@ -26,6 +26,16 @@ const OrderPage = ({ route, navigation }) => {
       await MakeOrder(id);
     }
     navigation.goBack();
+  };
+
+  const onChatClick = async (id) => {
+    setIsLoading(true);
+    const res = await CreateChat(id);
+    setIsLoading(false);
+    navigation.navigate('Chat', {
+      title: res.user.restaurant || res.user.name,
+      id: res.id,
+    });
   };
 
   useEffect(() => {
@@ -69,6 +79,17 @@ const OrderPage = ({ route, navigation }) => {
                 />
               </>
             )}
+            <Button
+              color="transparent"
+              shadowless
+              style={styles.button}
+              onPress={() => onChatClick(order.client.id)}>
+              {isLoading ? (
+                <ActivityIndicator size="small" />
+              ) : (
+                <Text>Write a message</Text>
+              )}
+            </Button>
             <Button
               color="transparent"
               shadowless
